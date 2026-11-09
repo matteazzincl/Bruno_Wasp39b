@@ -1,0 +1,28 @@
+n_estimators: 100
+max_depth: 10
+Confusion matrix:
+[[70 25]
+ [ 3 91]]
+Precision: 0.7845
+
+n_estimators: 100
+max_depth: 20
+Confusion matrix:
+[[74 21]
+ [ 5 89]]
+Precision: 0.8091
+
+n_estimators: 500
+max_depth: 10
+Confusion matrix:
+[[71 24]
+ [ 2 92]]
+Precision: 0.7931
+
+n_estimators: 500
+max_depth: 20
+Confusion matrix:
+[[70 25]
+ [ 1 93]]
+Precision: 0.7881
+
