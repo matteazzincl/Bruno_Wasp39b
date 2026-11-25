@@ -36,7 +36,7 @@ def main():
         transit = TransitModel(input_pars['transit'])
         transit.plot_light_curve(args.output)
     elif args.detect == rf:
-        prediction = randomforest(input_oars['RandomForest'])
+        prediction = randomforest(input_pars['RandomForest'])
         prediction.run_RandomForest()
     elif args.detect == cnn:
         prediction = CNNclassifier_class(input_pars['CNN'])
