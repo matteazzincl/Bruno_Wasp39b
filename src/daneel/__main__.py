@@ -3,7 +3,8 @@ from datetime import datetime, timezone
 
 from daneel.detection import TransitModel
 from daneel.parameters import Parameters
-
+from daneel.CNN_class import CNNclassifier_class
+from daneel.RF_class import randomforest
 
 def main():
     parser = argparse.ArgumentParser(description="Model and analyse exoplanet transits.")
@@ -20,7 +21,7 @@ def main():
     actions = parser.add_mutually_exclusive_group(required=True)
     actions.add_argument("-t", "--transit", action="store_true", help="Plot a transit light curve")
 
-    actions.add_argument("-d", "--detect", action="store_true", help="Run exoplanet detection")
+    actions.add_argument("-d", "--detect", type=str, help="Run exoplanet detection")
     actions.add_argument("-a", "--atmosphere", action="store_true", help="Run atmospheric characterisation")
     parser.add_argument("-o", "--output", default="lc.png", help="Output image for --transit")
 
@@ -34,8 +35,12 @@ def main():
     if args.transit:
         transit = TransitModel(input_pars['transit'])
         transit.plot_light_curve(args.output)
-    elif args.detect:
-        parser.error("detection is not implemented yet; use --transit")
+    elif args.detect == rf:
+        prediction = randomforest(input_oars['RandomForest'])
+        prediction.run_RandomForest()
+    elif args.detect == cnn:
+        prediction = CNNclassifier_class(input_pars['CNN'])
+        prediction.run_CNN() 
     elif args.atmosphere:
         parser.error("atmospheric characterisation is not implemented yet; use --transit")
 
