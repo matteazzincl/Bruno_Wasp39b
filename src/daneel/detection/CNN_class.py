@@ -29,6 +29,8 @@ from tensorflow.keras import layers, models, regularizers
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 import tensorflow.keras.backend as K
 
+import joblib
+
 class CNNclassifier_class:
 
     #Initialization function
@@ -42,7 +44,7 @@ class CNNclassifier_class:
         #self.model_path = config["CNN"]["model"]
         #self.dataset_path = config["CNN"]["dataset"]
         self.model_path = params_dict.get("model")
-        self.dataset_path = params_dict.get("daset")
+        self.dataset_path = params_dict.get("dataset")
 
         #Reading the dataset
         #self.df = pd.read_csv(self.dataset_path)
