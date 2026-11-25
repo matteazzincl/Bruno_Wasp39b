@@ -54,7 +54,7 @@ class CNNclassifier_class:
         #self.threshold = float(np.load(config["CNN"]["threshold"]))
         self.threshold = float(np.load(params_dict.get("threshold")))
         #self.scaler = joblib.load(config["CNN"]["scaler"])
-        self.scaler = joblib.load(params_dict.get("scaler)")
+        self.scaler = joblib.load(params_dict.get("scaler"))
         #A quanto pare va aggiunto lo scaler da salvere insieme al modello. Basta far re-runnare la pipeline fino a load_data
 
         #outputs
