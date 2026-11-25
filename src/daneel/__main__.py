@@ -21,7 +21,7 @@ def main():
     actions = parser.add_mutually_exclusive_group(required=True)
     actions.add_argument("-t", "--transit", action="store_true", help="Plot a transit light curve")
 
-    actions.add_argument("-d", "--detect", type=str, help="Run exoplanet detection")
+    actions.add_argument("-d", "--detect", type=str, choices=["rf", "cnn"], help="Run exoplanet detection")
     actions.add_argument("-a", "--atmosphere", action="store_true", help="Run atmospheric characterisation")
     parser.add_argument("-o", "--output", default="lc.png", help="Output image for --transit")
 
