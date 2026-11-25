@@ -3,8 +3,8 @@ from datetime import datetime, timezone
 
 from daneel.detection import TransitModel
 from daneel.parameters import Parameters
-from daneel.CNN_class import CNNclassifier_class
-from daneel.RF_class import randomforest
+from daneel.detection.CNN_class import CNNclassifier_class
+from daneel.detection.RF_class import randomforest
 
 def main():
     parser = argparse.ArgumentParser(description="Model and analyse exoplanet transits.")
