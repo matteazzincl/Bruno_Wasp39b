@@ -5,6 +5,7 @@ from daneel.detection import TransitModel
 from daneel.parameters import Parameters
 from daneel.detection.CNN_class import CNNclassifier_class
 from daneel.detection.RF_class import randomforest
+from daneel.dream.light_curve_gan import GAN_class
 
 def main():
     parser = argparse.ArgumentParser(description="Model and analyse exoplanet transits.")
@@ -23,6 +24,7 @@ def main():
 
     actions.add_argument("-d", "--detect", type=str, choices=["rf", "cnn"], help="Run exoplanet detection")
     actions.add_argument("-a", "--atmosphere", action="store_true", help="Run atmospheric characterisation")
+    actions.add_argument("--dream", action="store_true", help="Run GAN to generate lightcurves")
     parser.add_argument("-o", "--output", default="lc.png", help="Output image for --transit")
 
     args = parser.parse_args()
@@ -41,6 +43,11 @@ def main():
     elif args.detect == "cnn":
         prediction = CNNclassifier_class(input_pars['CNN'])
         prediction.run_CNN() 
+    elif arg.dream:
+        gan = GAN_class(input_pars['GAN'])
+        gan_lc = run_GAN()
+        gan.plot_lightcurves(gan_lc)
+
     elif args.atmosphere:
         parser.error("atmospheric characterisation is not implemented yet; use --transit")
 
