@@ -4,6 +4,7 @@ GAN:
   flux_nbins: 1000
   fluxerr_nbins: 936
   n_curves: 3
+  n_samples: 10
   nc: 1
   nz: 100
   ngf: 64
