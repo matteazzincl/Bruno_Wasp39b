@@ -1,0 +1,32 @@
+
+#I modify now the paths according to how they could be for a possible running
+#I assume: 
+#-the command is ran from a folder outside the one of the git repository (this being comp_astro_26)
+#-the tess_data.csv is inside that folder
+#-the RF and CNN trained model files are stored in comp_astro_26/src/daneel/detection
+#-the outputs are saved in that folder folder
+
+RandomForest:
+  model: "../comp_astro_26/src/daneel/detection/tess_rf_model.joblib"    # Path to save the trained Random Forest model
+  #cnn_model: "tess_model_final.keras"
+  dataset: "./tess_data.csv"          # Path to the dataset CSV file
+  threshold: "../comp_astro_26/src/daneel/detection/rf_optimal_threshold.npy" #to use the calculated optimal threshold
+  #cnn_threshold: "optimal_treshold.npy"
+  nbins: 1000
+  statistics: "./RF_classification_statistics.txt" #to save results
+  output_csv: "./RF_prediction_result.csv" #to save a csv with the predictions
+  #cnn_scaler: "scaler.pkl"
+
+CNN:
+  model: "../comp_astro_26/src/daneel/detection/tess_model_final.keras"
+  dataset: "./tess_data.csv" 
+  threshold: "../comp_astro_26/src/daneel/detection/optimal_treshold.npy"
+  scaler: "../comp_astro_26/src/daneel/detection/scaler.pkl"
+  nbins: 1000
+  statistics: "./CNN_classification_statistics.txt" #to save results
+  output_csv: "./CNN_prediction_result.csv" #to save a csv with the predictions
+  
+
+
+
+
