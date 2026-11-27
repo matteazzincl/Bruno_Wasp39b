@@ -1,0 +1,88 @@
+# Configurazione della GAN per light curve TESS.
+# I percorsi relativi sono risolti rispetto alla directory di questo file.
+
+data:
+  csv_path: "tess_data.csv"
+  n_flux: 1000
+  n_errors: 936
+  image_size: 44
+
+model:
+  latent_dim: 100
+  input_channels: 1
+
+  # Ogni elemento descrive un livello ConvTranspose2d del Generator.
+  # out_channels, kernel_size, stride e padding definiscono la geometria.
+  generator_layers:
+    - out_channels: 512
+      kernel_size: 3
+      stride: 1
+      padding: 0
+      batch_norm: true
+      activation: relu
+    - out_channels: 256
+      kernel_size: 4
+      stride: 2
+      padding: 1
+      batch_norm: true
+      activation: relu
+    - out_channels: 128
+      kernel_size: 3
+      stride: 2
+      padding: 1
+      batch_norm: true
+      activation: relu
+    - out_channels: 64
+      kernel_size: 4
+      stride: 2
+      padding: 1
+      batch_norm: true
+      activation: relu
+    - out_channels: 1
+      kernel_size: 4
+      stride: 2
+      padding: 1
+      batch_norm: false
+      activation: tanh
+
+  # Ogni elemento descrive un livello Conv2d del Discriminator.
+  discriminator_layers:
+    - out_channels: 64
+      kernel_size: 4
+      stride: 2
+      padding: 1
+      batch_norm: false
+      activation: leaky_relu
+    - out_channels: 128
+      kernel_size: 4
+      stride: 2
+      padding: 1
+      batch_norm: true
+      activation: leaky_relu
+    - out_channels: 256
+      kernel_size: 3
+      stride: 2
+      padding: 1
+      batch_norm: true
+      activation: leaky_relu
+    - out_channels: 512
+      kernel_size: 4
+      stride: 2
+      padding: 1
+      batch_norm: true
+      activation: leaky_relu
+    - out_channels: 1
+      kernel_size: 3
+      stride: 1
+      padding: 0
+      batch_norm: false
+      activation: sigmoid
+
+training:
+  batch_size: 128
+  epochs: 15
+  learning_rate: 0.0002
+  beta1: 0.5
+  num_workers: 0
+  ngpu: 1
+  seed: 999
