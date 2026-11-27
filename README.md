@@ -38,7 +38,7 @@ daneel -i <input_file> --transit [--output lightcurve.png]
 
 - `-i, --input`: Input parameter file (required)
 - `-t, --transit`: Generate a transit light curve from the YAML input
-- `-d, --detect`: Reserved for the course detection exercise
+- `-d, --detect ` : Does predictions on exoplanets candidates using Random Forest or CNN model as option
 - `-a, --atmosphere`: Reserved for the course atmosphere exercise
 - `-o, --output`: Output path for the transit plot (default: `lc.png`)
 
@@ -48,8 +48,11 @@ daneel -i <input_file> --transit [--output lightcurve.png]
 # Run exoplanet detection
 daneel -i examples/params.yaml --transit --output lightcurve.png
 
-# Run atmospheric characterization
-daneel -i examples/params.yaml --detect
+# Run Random forest prediction model
+daneel -i examples/params.yaml -d rf
+
+# Run CNN prediction model
+daneel -i examples/params.yaml -d rf
 
 # Run both detection and atmospheric analysis
 daneel -i examples/params.yaml --atmosphere
