@@ -102,6 +102,7 @@ class GAN_class:
         self.csv_path = params_dict.get("csv_path")
         self.image_size = params_dict.get("image_size")
         self.n_curves = params_dict.get("n_curves")
+        self.n_sample = params_dict.get("n_samples")
 
         self.n_bins = params_dict.get("flux_nbins") #1000
         self.n_error_bins = params_dict.get("fluxerr_nbins") #936
@@ -316,8 +317,9 @@ class GAN_class:
 
         return self.G_losses, self.D_losses
 
-    def generate(self, n_samples=1, return_errors=False, batch_size=256):
+    def generate(self, return_errors=False, batch_size=256):
     #generating lightcurves
+    n_samples = self.n_samples
     
         if self.netG is None:
             raise RuntimeError("Generator not builded.")
@@ -408,3 +410,24 @@ class GAN_class:
 
         fig.tight_layout()
         plt.show()
+
+def run_GAN(self):
+    #runs class till generate
+    # data loading
+
+    self.load_data()
+    print("Data loaded")
+
+    # model building
+    self.build_models()
+    print("Building the models")
+
+    # Training
+    self.train()
+    print("Training the GAN")
+
+    # Generating light curve
+    lightcurves = self.generate()
+    print("Generating lightcurves")
+
+    return lightcurves
