@@ -1,5 +1,5 @@
 GAN:
-  csv_path: "./tess_data.csv"
+  csv_path: "../tess_data.csv"
   image_size: 44
   flux_nbins: 1000
   fluxerr_nbins: 936

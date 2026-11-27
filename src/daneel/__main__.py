@@ -43,9 +43,9 @@ def main():
     elif args.detect == "cnn":
         prediction = CNNclassifier_class(input_pars['CNN'])
         prediction.run_CNN() 
-    elif arg.dream:
+    elif args.dream:
         gan = GAN_class(input_pars['GAN'])
-        gan_lc = run_GAN()
+        gan_lc = gan.run_GAN()
         gan.plot_lightcurves(gan_lc)
 
     elif args.atmosphere:
