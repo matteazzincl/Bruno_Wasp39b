@@ -140,7 +140,7 @@ class GAN_class:
         self.criterion = None
 
         # Parametri di normalizzazione
-        self.flux_min = None
+        self.flux_center = 1.0
         self.flux_scale = None
         self.error_min = None
         self.error_scale = None
@@ -174,16 +174,32 @@ class GAN_class:
         #if not np.isfinite(flux).all() or not np.isfinite(errors).all():
          #   raise ValueError("Il CSV contiene valori non validi.")
 
-        # flux normalization
-        self.flux_min = float(flux.min())
-        flux_max = float(flux.max())
+        # MODIFIED: robust flux normalization
 
-        self.flux_scale = flux_max - self.flux_min
+        self.flux_scale = float(
+            np.percentile(np.abs(flux - self.flux_center), 99.9)
+        )
 
         if self.flux_scale == 0:
-            self.flux_scale = 1.0
+            raise ValueError("Flux normalization scale is zero.")
 
-        flux_norm = 2 * (flux - self.flux_min) / self.flux_scale - 1
+        flux_norm = (flux - self.flux_center) / self.flux_scale
+
+        # NEW: fraction of values outside [-1, 1]
+        clipped_fraction = np.mean(np.abs(flux_norm) > 1)
+
+        # NEW: clipping
+        flux_norm = np.clip(flux_norm, -1.0, 1.0)
+
+        # NEW: normalization statistics
+        print("\nNORMALIZED FLUX STATISTICS")
+        print("Flux center:", self.flux_center)
+        print("Flux scale:", self.flux_scale)
+        print("Normalized flux min:", np.min(flux_norm))
+        print("Normalized flux max:", np.max(flux_norm))
+        print("Normalized flux mean:", np.mean(flux_norm))
+        print("Normalized flux std:", np.std(flux_norm))
+        print("Clipped fraction:", clipped_fraction * 100, "%")
 
         # flux_err nomalization
         self.error_min = float(errors.min())
@@ -324,7 +340,7 @@ class GAN_class:
         if self.netG is None:
             raise RuntimeError("Generator not builded.")
 
-        if self.flux_min is None or self.flux_scale is None:
+        if self.flux_center is None or self.flux_scale is None:
             raise RuntimeError("do load_data() first.")
 
         if n_samples < 1:
@@ -363,8 +379,8 @@ class GAN_class:
         # flux and flux_err separation
         flux_norm = flat[:, :self.n_bins]
 
-        # setting fluxes to original scales
-        flux = (flux_norm + 1) * self.flux_scale / 2 + self.flux_min
+        # MODIFIED: setting fluxes to original scales
+        flux = flux_norm * self.flux_scale + self.flux_center
 
         if not return_errors:
             return flux
